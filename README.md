@@ -12,6 +12,6 @@ To start using simply do following after installing the package:
 ```
 const your_game_id = 123456;
 const api = GamejoltSDK.create("your_private_key", your_game_id)
-await api.trophies.addAchieved("hello");
+await api.trophies.addAchieved("your_trophy_id");
 ```
 

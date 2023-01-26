@@ -128,7 +128,7 @@ export interface GamejoltTrophiesFetchResult extends GamejoltResponse
 
 export class GamejoltTrophiesApi extends GamejoltBaseApi
 {
-    protected get resource (): string
+    protected get resource(): string
     {
         return "trophies";
     }
@@ -138,9 +138,16 @@ export class GamejoltTrophiesApi extends GamejoltBaseApi
      * @param { GamejoltTrophiesAddAchievedParameters } parameters 
      * @returns { Promise<GamejoltResponse> }
      */
-    public addAchieved (parameters: GamejoltTrophiesAddAchievedParameters): Promise<GamejoltResponse> 
+    public addAchieved(parameters: GamejoltTrophiesAddAchievedParameters  | string | number): Promise<GamejoltResponse> 
     {
-        return this.get<GamejoltResponse>("add_achieved", parameters);
+        if (typeof parameters ==  "string" || typeof parameters == "number")
+        {
+            parameters = {
+                trophy_id: parameters
+            };
+        }
+
+        return this.get<GamejoltResponse>("add_achieved", parameters as GamejoltTrophiesFetchParameters);
     }
 
 
@@ -150,7 +157,7 @@ export class GamejoltTrophiesApi extends GamejoltBaseApi
      * @param { GamejoltTrophiesFetchParameters } parameters 
      * @returns { Promise<GamejoltTrophiesFetchResult> }
      */
-    public fetch (parameters: GamejoltTrophiesFetchParameters): Promise<GamejoltTrophiesFetchResult> 
+    public fetch(parameters: GamejoltTrophiesFetchParameters): Promise<GamejoltTrophiesFetchResult> 
     {
         return this.get<GamejoltTrophiesFetchResult>("", parameters);
     }

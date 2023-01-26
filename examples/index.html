@@ -1,0 +1,49 @@
+<html>
+
+<body>
+    <p>Simply test gamejolt sdk in browser. Please note that when game is opened in browser with gamejolt following is
+        passed as query parameters: 'token', 'gjapi_token' and 'gjapi_username'</p>
+    <p>Therefore to test, add ?token={token}&gjapi_username={username}&gjapi_token={private_token}</p>
+    <p>'token' can be found when you start your game in browser, 'gjapi_username' and 'gjapi_token' are found under your
+        user settings on <a href="https://gamejolt.com/">GameJolt</a> page.</p>
+
+
+    <p>How to use sdk in your code</p>
+    <p>
+        <code>// found in settings of your game on GameJolt</code><br />
+        <code> const api = GamejoltSDK.create("private_key_here", "game_id_here");</code><br />
+        <br />
+        <code>// Found under trophies section on GameJolt</code><br />
+        <code>const result = await api.trophies.addAchieved("trophy_id_here")</code><br />
+
+    </p>
+    <br />
+    <button id="test-btn">Press to test</button>
+
+    <script src="../dist/index.js"></script>
+    <script>
+        window.onload = async function () {
+
+            const config = {
+                "privateKey": "8225f89ee41a89ea40f39d036207947c",
+                "gameId": 752163,
+                "exampleTrophyId": 173466
+            }
+
+            document.getElementById("test-btn").onclick = async () => {
+
+                const api = GamejoltSDK.create(config.privateKey, config.gameId);
+
+                const result = await api.trophies.addAchieved(config.exampleTrophyId);
+
+                if (result.success) {
+                    alert("Success. Trophy added or was added previously.");
+                } else {
+                    alert(`Failed to make a call. Reason: ${result.message}`)
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
