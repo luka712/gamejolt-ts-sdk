@@ -8,7 +8,7 @@ export class GamejoltGameApi
     public readonly token?: string;
     public readonly username?: string;
 
-    constructor(private_key: string, game_id: number, public readonly config: Config)
+    constructor(private_key: string, game_id: number, config: Config)
     {
         if (typeof window !== "undefined")
         {
