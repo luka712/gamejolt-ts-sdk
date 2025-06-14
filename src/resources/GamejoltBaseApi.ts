@@ -44,7 +44,7 @@ export abstract class GamejoltBaseApi
      */
     protected readonly m_gjApiUserName: string;
 
-    constructor(private readonly m_privateKey: string, private readonly m_gameId: number, private readonly m_config: Config)
+    constructor(private readonly m_privateKey: string, private readonly m_gameId: number, private readonly m_config: Required<Config>)
     {
         const query_string = window.location.search;
         const url_params = new URLSearchParams(query_string);

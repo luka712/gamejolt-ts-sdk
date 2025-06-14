@@ -10,10 +10,10 @@ export interface Config {
      * Pass your own implementation of fetch.
      * Defaults to window.fetch in browsers.
      */
-    readonly fetch: typeof window.fetch;
+    readonly fetch?: typeof window.fetch;
 }
 
-function parse_config(config?: Partial<Config>): Config {
+function parse_config(config?: Config): Required<Config> {
     let fetch = config?.fetch;
 
     if (!fetch) {
@@ -34,6 +34,6 @@ function parse_config(config?: Partial<Config>): Config {
  * @param config optional configuration, see the config interface.
  * @returns 
  */
-export function create(private_key: string, game_id: number, config?: Partial<Config>) : GamejoltGameApi {
+export function create(private_key: string, game_id: number, config?: Config) : GamejoltGameApi {
     return new GamejoltGameApi(private_key, game_id, parse_config(config));
 }
