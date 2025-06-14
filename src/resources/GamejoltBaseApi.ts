@@ -1,4 +1,5 @@
 import CryptoJS from "crypto-js";
+import { Config } from "..";
 
 export interface GamejoltResponse 
 {
@@ -43,7 +44,7 @@ export abstract class GamejoltBaseApi
      */
     protected readonly m_gjApiUserName: string;
 
-    constructor(private readonly m_privateKey: string, private readonly m_gameId: number)
+    constructor(private readonly m_privateKey: string, private readonly m_gameId: number, private readonly config: Config)
     {
         const query_string = window.location.search;
         const url_params = new URLSearchParams(query_string);
@@ -98,7 +99,7 @@ export abstract class GamejoltBaseApi
         const signature = CryptoJS.MD5(`${url}${this.m_privateKey}`).toString();
         url += `&signature=${signature}`;
 
-        const response = await fetch(url);
+        const response = await this.config.fetch(url);
         const response_json = await response.json();
 
         const result = response_json.response as GamejoltResponse;
