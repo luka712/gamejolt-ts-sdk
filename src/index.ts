@@ -6,6 +6,10 @@ export * from "./resources/GameJoltScoresApi"
 export * from "./resources/GameJoltTrophiesApi"
 
 export interface Config {
+    /**
+     * Pass your own implementation of fetch.
+     * Defaults to window.fetch in browsers.
+     */
     readonly fetch: typeof window.fetch;
 }
 
@@ -27,6 +31,7 @@ function parse_config(config?: Partial<Config>): Config {
  * Create an instance of {@link GamejoltGameApi}
  * @param private_key the unique secret private game key.
  * @param game_id the unique game id.
+ * @param config optional configuration, see the config interface.
  * @returns 
  */
 export function create(private_key: string, game_id: number, config?: Partial<Config>) : GamejoltGameApi {
