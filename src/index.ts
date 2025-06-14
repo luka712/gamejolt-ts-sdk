@@ -12,7 +12,11 @@ export interface Config {
 function parse_config(config?: Partial<Config>): Config {
     let fetch = config?.fetch;
 
-    if (!fetch && typeof window !== "undefined") {
+    if (!fetch) {
+        if (typeof window === "undefined") {
+            throw new Error("I can't find an implementation of fetch.");
+        }
+        
         fetch = window.fetch;
     }
     
