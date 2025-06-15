@@ -1,4 +1,5 @@
 import CryptoJS from "crypto-js";
+import { Config } from "..";
 
 export interface GamejoltResponse 
 {
@@ -36,19 +37,22 @@ export abstract class GamejoltBaseApi
     /**
      * The auth token. Fetched from url query param 'gjapi_token'.
      */
-    protected readonly m_gjApiUserToken: string;
+    protected readonly m_gjApiUserToken?: string;
 
     /**
      * The username. Fetched from url query param 'gjapi_username'.
      */
-    protected readonly m_gjApiUserName: string;
+    protected readonly m_gjApiUserName?: string;
 
-    constructor(private readonly m_privateKey: string, private readonly m_gameId: number)
+    constructor(private readonly m_privateKey: string, private readonly m_gameId: number, private readonly m_config: Required<Config>)
     {
-        const query_string = window.location.search;
-        const url_params = new URLSearchParams(query_string);
-        this.m_gjApiUserToken = url_params.get("gjapi_token");
-        this.m_gjApiUserName = url_params.get("gjapi_username");
+        if (typeof window !== "undefined")
+        {
+            const query_string = window.location.search;
+            const url_params = new URLSearchParams(query_string);
+            this.m_gjApiUserToken = url_params.get("gjapi_token");
+            this.m_gjApiUserName = url_params.get("gjapi_username");
+        }
     }
 
     /**
@@ -98,7 +102,7 @@ export abstract class GamejoltBaseApi
         const signature = CryptoJS.MD5(`${url}${this.m_privateKey}`).toString();
         url += `&signature=${signature}`;
 
-        const response = await fetch(url);
+        const response = await this.m_config.fetch(url);
         const response_json = await response.json();
 
         const result = response_json.response as GamejoltResponse;
