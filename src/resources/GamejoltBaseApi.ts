@@ -44,6 +44,12 @@ export abstract class GamejoltBaseApi
      */
     protected readonly m_gjApiUserName?: string;
 
+    /**
+     * The constructor of GamejoltBaseApi.
+     * @param m_privateKey 
+     * @param m_gameId 
+     * @param m_config 
+     */
     constructor(private readonly m_privateKey: string, private readonly m_gameId: number, private readonly m_config: Required<Config>)
     {
         if (typeof window !== "undefined")
