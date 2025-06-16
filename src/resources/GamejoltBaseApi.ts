@@ -118,7 +118,7 @@ export abstract class GamejoltBaseApi
 
         const response_json = await response.json();
 
-        const result = response_json?.response as GamejoltResponse;
+        const result = response_json.response as GamejoltResponse;
 
         if (result?.success === false || result?.success === "false")
         {
