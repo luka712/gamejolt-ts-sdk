@@ -351,3 +351,4 @@ MigrationBackup/
 
 dist
 .idea
+package-lock.json
