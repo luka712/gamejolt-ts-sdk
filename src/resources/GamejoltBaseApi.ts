@@ -2,7 +2,8 @@ import CryptoJS from "crypto-js";
 import { Config } from "..";
 import {utilCreateQueryString} from "./utils";
 
-export interface GamejoltParameters {
+export interface GamejoltParameters
+{
     /**
      * Override the game ID passed as a configuration.
      */
