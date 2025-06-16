@@ -1,41 +1,21 @@
-import { GamejoltBaseApi, GamejoltResponse } from "./GamejoltBaseApi";
+import {GamejoltBaseApi, GamejoltParameters, GamejoltResponse} from "./GamejoltBaseApi";
 
 /**
  * The Data Store - Fetch parameters
  */
-export interface GamejoltDataStoreFetchParameters 
+export interface GamejoltDataStoreFetchParameters extends GamejoltParameters
 {
-    /**
-    * The ID of your game.
-    */
-    game_id?: string;
-
     /**
      * The key of the data item you'd like to set.
      */
     key: string;
-
-    /**
-     * The user's username.
-     */
-    username?: string
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
 }
 
 /**
  * The Data Store - Set parameters
  */
-export interface GamejoltDataStoreSetParameters 
+export interface GamejoltDataStoreSetParameters extends GamejoltParameters
 {
-    /**
-     * The ID of your game.
-     */
-    game_id?: string;
-
     /**
      * The key of the data item you'd like to set.
      */
@@ -45,16 +25,6 @@ export interface GamejoltDataStoreSetParameters
      * The data you'd like to set.
      */
     data: string;
-
-    /**
-     * The user's username.
-     */
-    username?: string
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
 }
 
 /**
@@ -97,27 +67,12 @@ export enum GamejoltDataStoreUpdateOperation
 /**
  * The Data Store - Update parameters
  */
-export interface GamejoltDataStoreUpdateParameters
+export interface GamejoltDataStoreUpdateParameters extends GamejoltParameters
 {
-    /**
-     * The ID of your game.
-     */
-    game_id?: string;
-
     /**
      * The key of the data item you'd like to update.
      */
     key: string;
-
-    /**
-     * The user's username.
-     */
-    username?: string
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
 
     /**
      * The operation you'd like to perform.
@@ -134,24 +89,8 @@ export interface GamejoltDataStoreUpdateParameters
 /**
  * The Data Store - Get Keys parameters
  */
-export interface GamejoltDataStorageGetKeysParameters
+export interface GamejoltDataStorageGetKeysParameters extends GamejoltParameters
 {
-    /**
-     * The ID of your game.
-     */
-    game_id?: string;
-
-
-    /**
-     * The user's username.
-     */
-    username?: string
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
-
     /**
      * The pattern to apply to the key names in the data store.
      */

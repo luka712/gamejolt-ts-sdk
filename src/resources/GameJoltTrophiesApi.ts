@@ -1,25 +1,10 @@
-import { GamejoltBaseApi, GamejoltResponse } from "./GamejoltBaseApi";
+import {GamejoltBaseApi, GamejoltParameters, GamejoltResponse} from "./GamejoltBaseApi";
 
 /**
  * The Trophies - Add Achieved parameters
  */
-export interface GamejoltTrophiesAddAchievedParameters
+export interface GamejoltTrophiesAddAchievedParameters extends GamejoltParameters
 {
-    /**
-     * The ID of your game.
-     */
-    game_id?: string;
-
-    /**
-     * The user's username.
-     */
-    username?: string
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
-
     /**
      * The ID of the trophy to add for the user.
      */
@@ -29,23 +14,8 @@ export interface GamejoltTrophiesAddAchievedParameters
 /**
 * The Trophies - Fetch parameters
 */
-export interface GamejoltTrophiesFetchParameters
+export interface GamejoltTrophiesFetchParameters extends GamejoltParameters
 {
-    /**
-     * The ID of your game.
-     */
-    game_id?: string;
-
-    /**
-     * The user's username.
-     */
-    username?: string
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
-
     /**
      * Pass in true to return only the achieved trophies for a user. 
      * Pass in false to return only trophies the user hasn't achieved. 
