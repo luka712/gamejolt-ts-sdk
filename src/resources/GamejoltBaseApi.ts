@@ -96,7 +96,7 @@ export abstract class GamejoltBaseApi
         const queryStr = utilCreateQueryString({
             ...params,
             // If provided overrides, use them. Else, fall back to whatever
-            // we put in the params.
+            // we put in the constructor.
             game_id: params.game_id ?? this.m_gameId,
             username: params.username ?? this.m_gjApiUserName,
             user_token: params.user_token ?? this.m_gjApiUserToken,
