@@ -11,6 +11,17 @@ export interface Config {
      * Defaults to window.fetch in browsers.
      */
     readonly fetch?: typeof window.fetch;
+    /**
+     * The base URL to the Game Jolt API.
+     * @default http://api.gamejolt.com/api/game
+     */
+    readonly baseUrl?: string;
+
+    /**
+     * The API version to Game Jolt.
+     * @default v1_2
+     */
+    readonly version?: string;
 }
 
 function parse_config(config?: Config): Required<Config> {
@@ -24,7 +35,11 @@ function parse_config(config?: Config): Required<Config> {
         fetch = window.fetch;
     }
     
-    return { fetch };
+    return {
+        fetch,
+        baseUrl: config?.baseUrl ?? "http://api.gamejolt.com/api/game",
+        version: config?.version ?? "v1_2",
+    };
 }
 
 /**

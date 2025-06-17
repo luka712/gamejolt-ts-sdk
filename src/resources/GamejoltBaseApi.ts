@@ -1,5 +1,22 @@
 import CryptoJS from "crypto-js";
 import { Config } from "..";
+import {utilCreateQueryString} from "./utils";
+
+export interface GamejoltParameters
+{
+    /**
+     * Override the game ID passed as a configuration.
+     */
+    readonly game_id?: string;
+    /**
+     * Override the username passed in the URL.
+     */
+    readonly username?: string;
+    /**
+     * Override the user token passed in the URL.
+     */
+    readonly user_token?: string;
+}
 
 export interface GamejoltResponse 
 {
@@ -24,16 +41,6 @@ export class GamejoltResponseError extends Error
 
 export abstract class GamejoltBaseApi 
 {
-    /**
-     * The base url of game jolt.
-     */
-    private readonly m_baseUrl: string = "http://api.gamejolt.com/api/game";
-
-    /**
-     * The version of api.
-     */
-    private readonly m_version: string = "v1_2";
-
     /**
      * The auth token. Fetched from url query param 'gjapi_token'.
      */
@@ -68,15 +75,15 @@ export abstract class GamejoltBaseApi
 
     protected get url () 
     {
-        return `${this.m_baseUrl}/${this.m_version}/${this.resource}`;
+        return `${this.m_config.baseUrl}/${this.m_config.version}/${this.resource}`;
     }
 
     /**
      * Gets the resource.
      * @param { string } action - which action to execute.
-     * @param { { [id:string]: string }}
+     * @param { { [id:string]: string }} params
      */
-    protected async get<T> (action: string, params: { [id: string]: string | number } | object): Promise<T> 
+    protected async get<T> (action: string, params: GamejoltParameters): Promise<T>
     {
         let url = `${this.url}/`;
 
@@ -86,29 +93,29 @@ export abstract class GamejoltBaseApi
             url += `${action}/`
         }
 
-        url += `?game_id=${this.m_gameId}`;
+        const queryStr = utilCreateQueryString({
+            ...params,
+            // If provided overrides, use them. Else, fall back to whatever
+            // we put in the constructor.
+            game_id: params.game_id ?? this.m_gameId,
+            username: params.username ?? this.m_gjApiUserName,
+            user_token: params.user_token ?? this.m_gjApiUserToken,
+        })
 
-        // add user username and token if they exist 
-        if (this.m_gjApiUserName)
-        {
-            url += `&username=${this.m_gjApiUserName}`;
-        }
-        if (this.m_gjApiUserToken)
-        {
-            url += `&user_token=${this.m_gjApiUserToken}`;
-        }
-        if (params)
-        {
-            for (const key in params)
-            {
-                url += `&${key}=${params[key]}`;
-            }
-        }
+        url += `?${queryStr}`;
 
         const signature = CryptoJS.MD5(`${url}${this.m_privateKey}`).toString();
         url += `&signature=${signature}`;
 
         const response = await this.m_config.fetch(url);
+
+        if (!response.ok)
+        {
+            // Read it as text, as opposed to JSON, to circumvent
+            // any potential parsing issues.
+            throw new GamejoltResponseError(await response.text());
+        }
+
         const response_json = await response.json();
 
         const result = response_json.response as GamejoltResponse;

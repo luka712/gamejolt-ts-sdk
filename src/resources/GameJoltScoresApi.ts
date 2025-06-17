@@ -1,23 +1,8 @@
-import { GamejoltBaseApi, GamejoltResponse } from "./GamejoltBaseApi";
+import {GamejoltBaseApi, GamejoltParameters, GamejoltResponse} from "./GamejoltBaseApi";
 
 
-export interface GamejoltScoresAddParameters
+export interface GamejoltScoresAddParameters extends GamejoltParameters
 {
-    /**
-     * The ID of your game.
-     */
-    game_id?: string;
-
-    /**
-     * The user's username.
-     */
-    username?: string;
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
-
     /**
      * The guest's name.
      */
@@ -47,13 +32,8 @@ export interface GamejoltScoresAddParameters
     table_id?: string;
 }
 
-export interface GamejoltScoresFetchParameters
+export interface GamejoltScoresFetchParameters extends GamejoltParameters
 {
-    /**
-    * The ID of your game.
-    */
-    game_id: string;
-
     /**
      * The number of scores you'd like to return.
      */
@@ -63,16 +43,6 @@ export interface GamejoltScoresFetchParameters
      * The ID of the score table.
      */
     table_id?: string;
-
-    /**
-    * The user's username.
-    */
-    username?: string;
-
-    /**
-     * The user's token.
-     */
-    user_token?: string;
 
     /**
       * The guest's name.
