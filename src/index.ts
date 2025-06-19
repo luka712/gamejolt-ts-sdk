@@ -40,7 +40,7 @@ export function parse_config(config?: Config): Required<Config>
 
     return {
         fetch,
-        baseUrl: config?.baseUrl ?? "http://api.gamejolt.com/api/game",
+        baseUrl: config?.baseUrl ?? "https://api.gamejolt.com/api/game",
         version: config?.version ?? "v1_2",
     };
 }
