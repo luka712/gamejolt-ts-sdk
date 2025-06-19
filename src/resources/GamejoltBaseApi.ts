@@ -18,6 +18,11 @@ export interface GamejoltParameters
     readonly user_token?: string;
 }
 
+interface GamejoltRawResponse<T extends GamejoltResponse>
+{
+    readonly response: T;
+}
+
 export interface GamejoltResponse
 {
     /**
@@ -82,7 +87,7 @@ export abstract class GamejoltBaseApi
      * @param { string } action - which action to execute.
      * @param { { [id:string]: string }} params
      */
-    protected async get<T>(action: string, params: GamejoltParameters): Promise<T>
+    protected async get<T extends GamejoltResponse> (action: string, params: GamejoltParameters): Promise<T>
     {
         let url = `${this.url}/`;
 
@@ -115,15 +120,15 @@ export abstract class GamejoltBaseApi
             throw new GamejoltResponseError(await response.text());
         }
 
-        const response_json = await response.json();
+        const response_json = await response.json() as GamejoltRawResponse<T>;
 
-        const result = response_json.response as GamejoltResponse;
+        const result = response_json.response;
 
         if (!result || result?.success === false || result?.success === "false")
         {
             throw new GamejoltResponseError(result.message ?? "Unknown error");
         }
 
-        return result as unknown as T;
+        return result;
     }
 }

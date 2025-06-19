@@ -1,12 +1,20 @@
-import { GamejoltBaseApi, GamejoltParameters, GamejoltResponse } from "./GamejoltBaseApi";
+import {GamejoltBaseApi, GamejoltParameters, GamejoltResponse} from "./GamejoltBaseApi";
 
-export interface GamejoltScoresAddParameters extends GamejoltParameters
+interface GamejoltScoresParameters extends GamejoltParameters
 {
+    /**
+     * The ID of the score table.
+     */
+    table_id?: string;
+
     /**
      * The guest's name.
      */
     guest?: string;
+}
 
+export interface GamejoltScoresAddParameters extends GamejoltScoresParameters
+{
     /**
      * This is a string value associated with the score.
      * Example: '500 Points'
@@ -24,14 +32,9 @@ export interface GamejoltScoresAddParameters extends GamejoltParameters
      * If there's any extra data you would like to store as a string, you can use this variable.
      */
     extra_data?: string;
-
-    /**
-     * The ID of the score table to submit to.
-     */
-    table_id?: string;
 }
 
-export interface GamejoltScoresFetchParameters extends GamejoltParameters
+export interface GamejoltScoresFetchParameters extends GamejoltScoresParameters
 {
     /**
      * The number of scores you'd like to return.
