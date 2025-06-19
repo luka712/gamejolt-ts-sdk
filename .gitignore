@@ -351,6 +351,3 @@ MigrationBackup/
 
 dist
 .idea
-
-# Ignore CircleCI configuration files. Create new one from template (.circleci/config.template.yml)
-.circleci/config.yml
