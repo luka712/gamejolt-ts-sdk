@@ -1,12 +1,12 @@
 {
-    "extends": "@tsconfig/recommended",
-    "compilerOptions": {
-        "isolatedModules": true,
-        "lib": ["dom"],
+  "extends": "@tsconfig/recommended",
+  "compilerOptions": {
+    "isolatedModules": true,
+    "lib": ["dom"],
 
-        "outDir": "dist",
-        "rootDir": "src"
-    },
-    "include": ["src"],
-    "exclude": ["src/**/*test*", "node_modules"]
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*test*", "node_modules"]
 }

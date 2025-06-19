@@ -1,43 +1,43 @@
 {
-    "name": "gamejolt-ts-sdk",
-    "version": "0.2.0",
-    "description": "The Typescript SDK for Gamejolt",
-    "source": "./src/index.ts",
+  "name": "gamejolt-ts-sdk",
+  "version": "0.2.0",
+  "description": "The Typescript SDK for Gamejolt",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.esm.js",
     "types": "./dist/index.d.ts",
-    "exports": {
-        "import": "./dist/index.esm.js",
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-    },
-    "main": "./dist/index.js",
-    "module": "./dist/index.esm.js",
-    "unpkg": "./dist/index.umd.js",
-    "scripts": {
-        "test": "jest",
-        "build": "microbundle --format cjs,esm,umd"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/luka712/gamejolt-ts-sdk.git"
-    },
-    "devDependencies": {
-        "@tsconfig/recommended": "^1.0.10",
-        "@types/crypto-js": "^4.1.1",
-        "@types/jest": "^27.5.2",
-        "@types/node": "^18.0.4",
-        "jest": "^27.5.1",
-        "microbundle": "^0.15.1",
-        "ts-jest": "^27.1.5",
-        "ts-node": "^10.9.2",
-        "typescript": "^4.9.5"
-    },
-    "dependencies": {
-        "crypto-js": "^4.1.1"
-    },
-    "author": "",
-    "license": "MIT",
-    "files": [
-        "dist",
-        "src"
-    ]
+    "default": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "unpkg": "./dist/index.umd.js",
+  "scripts": {
+    "test": "jest",
+    "build": "microbundle --format cjs,esm,umd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luka712/gamejolt-ts-sdk.git"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.10",
+    "@types/crypto-js": "^4.2.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.3",
+    "jest": "^30.0.1",
+    "microbundle": "^0.15.1",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ]
 }
