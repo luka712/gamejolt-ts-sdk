@@ -1,4 +1,4 @@
-import {GamejoltBaseApi, GamejoltParameters, GamejoltResponse} from "./GamejoltBaseApi";
+import { GamejoltBaseApi, GamejoltParameters, GamejoltResponse } from "./GamejoltBaseApi";
 
 /**
  * The Data Store - Fetch parameters
@@ -30,7 +30,7 @@ export interface GamejoltDataStoreSetParameters extends GamejoltParameters
 /**
  * Valid Values for 'operation' property of @see GamejoltDataStoreUpdateParameters
  */
-export enum GamejoltDataStoreUpdateOperation 
+export enum GamejoltDataStoreUpdateOperation
 {
     /**
      * Adds the value to the current data store item.
@@ -60,9 +60,8 @@ export enum GamejoltDataStoreUpdateOperation
     /**
      * Prepends the value to the current data store item.
      */
-    Prepend = "prepend"
+    Prepend = "prepend",
 }
-
 
 /**
  * The Data Store - Update parameters
@@ -121,13 +120,13 @@ export interface GamejoltDataStorageFetchResult extends GamejoltResponse
     readonly data: number | string;
 }
 
-export interface GamejoltDataStorageGetKeysResult extends GamejoltResponse 
+export interface GamejoltDataStorageGetKeysResult extends GamejoltResponse
 {
     /**
      * The name of the key. This function will return all the keys for this particular data store.
      * Example: keyname
      */
-    readonly keys:string;
+    readonly keys: string;
 }
 
 /**
@@ -135,64 +134,63 @@ export interface GamejoltDataStorageGetKeysResult extends GamejoltResponse
  */
 export class GamejoltDataStorageApi extends GamejoltBaseApi
 {
-    protected get resource (): string
+    protected get resource(): string
     {
         return "data-store";
     }
 
     /**
      * Sets data in the data store.
-     * 
+     *
      * Remarks:
      * If you pass in the user information, this item will be removed from a user's data store. If you leave the user information empty, it will be removed from the game's global data store.
      * You can create new data store items by passing in a key that doesn't yet exist in the data store.
-     * @param parameters 
-     * @returns 
+     * @param parameters
+     * @returns
      */
-    public set (parameters: GamejoltDataStoreSetParameters): Promise<GamejoltResponse> 
+    public set(parameters: GamejoltDataStoreSetParameters): Promise<GamejoltResponse>
     {
         return this.get<GamejoltResponse>("set", parameters);
     }
 
     /**
      * Updates data in the data store.
-     * 
+     *
      * Remarks:
      * You can only perform mathematic operations on numerical data.
      * If you pass in the user information, this function will return all the keys in a user's data store. If you leave the user information empty, it will return all the keys in the game's global data store.
-     * @param parameters @see {@link GamejoltDataStoreUpdateParameters} 
-     * @returns 
+     * @param parameters @see {@link GamejoltDataStoreUpdateParameters}
+     * @returns
      */
-    public update (parameters: GamejoltDataStoreUpdateParameters): Promise<GamejoltDataStorageUpdateResult>
+    public update(parameters: GamejoltDataStoreUpdateParameters): Promise<GamejoltDataStorageUpdateResult>
     {
         return this.get<GamejoltDataStorageUpdateResult>("update", parameters);
     }
 
     /**
      * Returns data from the data store.
-     * 
+     *
      * Remarks:
      * If you pass in the user information, the data item will be fetched for a user. If you leave the user information empty, it will be fetched globally for the game.
-     * @param { GamejoltDataStoreFetchParameters } parameters 
+     * @param { GamejoltDataStoreFetchParameters } parameters
      * @returns { Promise<GamejoltDataStorageFetchResult> }
      */
-    public fetch (parameters: GamejoltDataStoreFetchParameters): Promise<GamejoltDataStorageFetchResult> 
+    public fetch(parameters: GamejoltDataStoreFetchParameters): Promise<GamejoltDataStorageFetchResult>
     {
         return this.get<GamejoltDataStorageFetchResult>("", parameters);
     }
 
-
     /**
      * Returns either all the keys in the game's global data store, or all the keys in a user's data store.
-     * 
+     *
      * Remarks:
      * If you apply a pattern to the request, only keys with applicable key names will be returned. The placeholder character for patterns is *.
      * If you pass in the user information, this function will return all the keys in a user's data store. If you leave the user information empty, it will return all the keys in the game's global data store.
      * This request will return a list of the key values. The key return value can appear more than once.
-     * @param  { GamejoltDataStorageGetKeysParameters | undefined } parameters 
+     * @param  { GamejoltDataStorageGetKeysParameters | undefined } parameters
      * @returns { Promise<GamejoltDataStorageGetKeysResult> }
      */
-    public getKeys (parameters: GamejoltDataStorageGetKeysParameters = {}) : Promise<GamejoltDataStorageGetKeysResult> 
+    public getKeys(parameters: GamejoltDataStorageGetKeysParameters = {}): Promise<GamejoltDataStorageGetKeysResult>
     {
         return this.get<GamejoltDataStorageGetKeysResult>("get-keys", parameters);
     }

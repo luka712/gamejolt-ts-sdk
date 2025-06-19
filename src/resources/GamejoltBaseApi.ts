@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 import { Config } from "..";
-import {utilCreateQueryString} from "./utils";
+import { utilCreateQueryString, utilNullToUndefined } from "./utils";
 
 export interface GamejoltParameters
 {
@@ -18,12 +18,17 @@ export interface GamejoltParameters
     readonly user_token?: string;
 }
 
-export interface GamejoltResponse 
+interface GamejoltRawResponse<T extends GamejoltResponse>
+{
+    readonly response: T;
+}
+
+export interface GamejoltResponse
 {
     /**
      * 	Whether the request succeeded or failed.
      */
-    readonly success: boolean|string;
+    readonly success: boolean | string;
 
     /**
      * If the request was not successful, this contains the error message.
@@ -39,7 +44,7 @@ export class GamejoltResponseError extends Error
     }
 }
 
-export abstract class GamejoltBaseApi 
+export abstract class GamejoltBaseApi
 {
     /**
      * The auth token. Fetched from url query param 'gjapi_token'.
@@ -53,27 +58,26 @@ export abstract class GamejoltBaseApi
 
     /**
      * The constructor of GamejoltBaseApi.
-     * @param m_privateKey 
-     * @param m_gameId 
-     * @param m_config 
+     * @param m_privateKey
+     * @param m_gameId
+     * @param m_config
      */
-    constructor(private readonly m_privateKey: string, private readonly m_gameId: number, private readonly m_config: Required<Config>)
-    {
+    constructor(private readonly m_privateKey: string,  private readonly m_gameId: number, private readonly m_config: Required<Config>) {
         if (typeof window !== "undefined")
         {
             const query_string = window.location.search;
             const url_params = new URLSearchParams(query_string);
-            this.m_gjApiUserToken = url_params.get("gjapi_token");
-            this.m_gjApiUserName = url_params.get("gjapi_username");
+            this.m_gjApiUserToken = utilNullToUndefined(url_params.get("gjapi_token"));
+            this.m_gjApiUserName = utilNullToUndefined(url_params.get("gjapi_username"));
         }
     }
 
     /**
      * Resource of game jolt, such as trophies.
      */
-    protected abstract get resource (): string;
+    protected abstract get resource(): string;
 
-    protected get url () 
+    protected get url()
     {
         return `${this.m_config.baseUrl}/${this.m_config.version}/${this.resource}`;
     }
@@ -83,14 +87,14 @@ export abstract class GamejoltBaseApi
      * @param { string } action - which action to execute.
      * @param { { [id:string]: string }} params
      */
-    protected async get<T> (action: string, params: GamejoltParameters): Promise<T>
+    protected async get<T extends GamejoltResponse> (action: string, params: GamejoltParameters): Promise<T>
     {
         let url = `${this.url}/`;
 
         // if there is an action, add it to url
         if (action != "")
         {
-            url += `${action}/`
+            url += `${action}/`;
         }
 
         const queryStr = utilCreateQueryString({
@@ -100,7 +104,7 @@ export abstract class GamejoltBaseApi
             game_id: params.game_id ?? this.m_gameId,
             username: params.username ?? this.m_gjApiUserName,
             user_token: params.user_token ?? this.m_gjApiUserToken,
-        })
+        });
 
         url += `?${queryStr}`;
 
@@ -116,16 +120,15 @@ export abstract class GamejoltBaseApi
             throw new GamejoltResponseError(await response.text());
         }
 
-        const response_json = await response.json();
+        const response_json = await response.json() as GamejoltRawResponse<T>;
 
-        const result = response_json.response as GamejoltResponse;
+        const result = response_json.response;
 
-        if (result?.success === false || result?.success === "false")
+        if (!result || result?.success === false || result?.success === "false")
         {
-            throw new GamejoltResponseError(result.message);
+            throw new GamejoltResponseError(result.message ?? "Unknown error");
         }
 
-
-        return result as unknown as T;
+        return result;
     }
 }
