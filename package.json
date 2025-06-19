@@ -1,6 +1,6 @@
 {
   "name": "gamejolt-ts-sdk",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "The Typescript SDK for Gamejolt",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
