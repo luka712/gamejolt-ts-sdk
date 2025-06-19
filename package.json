@@ -12,9 +12,10 @@
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
   "unpkg": "./dist/index.umd.js",
+  "amdName": "GamejoltSDK",
   "scripts": {
     "test": "jest",
-    "build": "microbundle --format cjs,esm,umd"
+    "build": "microbundle --format cjs,esm && microbundle --format umd --external node-fetch"
   },
   "repository": {
     "type": "git",
