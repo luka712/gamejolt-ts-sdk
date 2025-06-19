@@ -2,33 +2,42 @@
   "name": "gamejolt-ts-sdk",
   "version": "0.2.0",
   "description": "The Typescript SDK for Gamejolt",
-  "main": "dist/index.js",
-  "browser": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.esm.js",
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "unpkg": "./dist/index.umd.js",
   "scripts": {
     "test": "jest",
-    "build": "npx webpack"
+    "build": "microbundle --format cjs,esm,umd"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luka712/gamejolt-ts-sdk.git"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.1.1",
-    "@types/earcut": "^2.1.1",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^18.0.4",
-    "jest": "^27.1.3",
-    "ts-jest": "^27.1.3",
-    "ts-loader": "^9.2.6",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.7.4",
-    "webpack": "^5.65.0",
-    "webpack-cli": "^4.10.0"
+    "@tsconfig/recommended": "^1.0.10",
+    "@types/crypto-js": "^4.2.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.3",
+    "jest": "^30.0.1",
+    "microbundle": "^0.15.1",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "crypto-js": "^4.1.1"
+    "crypto-js": "^4.2.0"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ]
 }

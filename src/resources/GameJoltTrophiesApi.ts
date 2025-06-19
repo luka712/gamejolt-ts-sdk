@@ -1,4 +1,4 @@
-import {GamejoltBaseApi, GamejoltParameters, GamejoltResponse} from "./GamejoltBaseApi";
+import { GamejoltBaseApi, GamejoltParameters, GamejoltResponse } from "./GamejoltBaseApi";
 
 /**
  * The Trophies - Add Achieved parameters
@@ -12,13 +12,13 @@ export interface GamejoltTrophiesAddAchievedParameters extends GamejoltParameter
 }
 
 /**
-* The Trophies - Fetch parameters
-*/
+ * The Trophies - Fetch parameters
+ */
 export interface GamejoltTrophiesFetchParameters extends GamejoltParameters
 {
     /**
-     * Pass in true to return only the achieved trophies for a user. 
-     * Pass in false to return only trophies the user hasn't achieved. 
+     * Pass in true to return only the achieved trophies for a user.
+     * Pass in false to return only trophies the user hasn't achieved.
      * Leave blank to retrieve all trophies.
      */
     achieved?: boolean;
@@ -26,8 +26,8 @@ export interface GamejoltTrophiesFetchParameters extends GamejoltParameters
     /**
      * If you would like to return just one trophy, you may pass the trophy ID with this parameter.
      * If you do, only that trophy will be returned in the response.
-     * You may also pass multiple trophy IDs here if you want to return a subset of all the trophies. 
-     * You do this as a comma-separated list in the same way you would for retrieving multiple users. 
+     * You may also pass multiple trophy IDs here if you want to return a subset of all the trophies.
+     * You do this as a comma-separated list in the same way you would for retrieving multiple users.
      * Passing a trophy_id will ignore the achieved parameter if it is passed.
      */
     trophy_id?: number | string;
@@ -36,15 +36,15 @@ export interface GamejoltTrophiesFetchParameters extends GamejoltParameters
 /**
  * The trophy difficulty.
  */
-export enum GamejoltTrophyDifficulty 
+export enum GamejoltTrophyDifficulty
 {
     Bronze = "Bronze",
     Silver = "Silver",
     Gold = "Gold",
-    Platinum = "Platinum"
+    Platinum = "Platinum",
 }
 
-export interface GamejoltTrophy 
+export interface GamejoltTrophy
 {
     /**
      * The ID of the trophy.
@@ -83,7 +83,6 @@ export interface GamejoltTrophy
     readonly achieved: boolean | string;
 }
 
-
 /**
  * The Gamejolt trophies fetch response.
  */
@@ -95,7 +94,6 @@ export interface GamejoltTrophiesFetchResult extends GamejoltResponse
     readonly trophies: Array<GamejoltTrophy>;
 }
 
-
 export class GamejoltTrophiesApi extends GamejoltBaseApi
 {
     protected get resource(): string
@@ -105,31 +103,29 @@ export class GamejoltTrophiesApi extends GamejoltBaseApi
 
     /**
      * Sets a trophy as achieved for a particular user.
-     * @param { GamejoltTrophiesAddAchievedParameters } parameters 
+     * @param { GamejoltTrophiesAddAchievedParameters } parameters
      * @returns { Promise<GamejoltResponse> }
      */
-    public addAchieved(parameters: GamejoltTrophiesAddAchievedParameters  | string | number): Promise<GamejoltResponse> 
+    public addAchieved(parameters: GamejoltTrophiesAddAchievedParameters | string | number): Promise<GamejoltResponse>
     {
-        if (typeof parameters ==  "string" || typeof parameters == "number")
+        if (typeof parameters == "string" || typeof parameters == "number")
         {
             parameters = {
-                trophy_id: parameters
+                trophy_id: parameters,
             };
         }
 
         return this.get<GamejoltResponse>("add_achieved", parameters as GamejoltTrophiesFetchParameters);
     }
 
-
     /**
      * Returns one trophy or multiple trophies, depending on the parameters passed in.
-     * 
-     * @param { GamejoltTrophiesFetchParameters } parameters 
+     *
+     * @param { GamejoltTrophiesFetchParameters } parameters
      * @returns { Promise<GamejoltTrophiesFetchResult> }
      */
-    public fetch(parameters: GamejoltTrophiesFetchParameters): Promise<GamejoltTrophiesFetchResult> 
+    public fetch(parameters: GamejoltTrophiesFetchParameters): Promise<GamejoltTrophiesFetchResult>
     {
         return this.get<GamejoltTrophiesFetchResult>("", parameters);
     }
-
 }

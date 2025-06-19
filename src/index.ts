@@ -1,11 +1,12 @@
-import { GamejoltGameApi } from "./GamejoltGameApi"
+import { GamejoltGameApi } from "./GamejoltGameApi";
 
-export * from "./GamejoltGameApi"
-export * from "./resources/GameJoltDataStorageApi"
-export * from "./resources/GameJoltScoresApi"
-export * from "./resources/GameJoltTrophiesApi"
+export * from "./GamejoltGameApi";
+export * from "./resources/GameJoltDataStorageApi";
+export * from "./resources/GameJoltScoresApi";
+export * from "./resources/GameJoltTrophiesApi";
 
-export interface Config {
+export interface Config
+{
     /**
      * Pass your own implementation of fetch.
      * Defaults to window.fetch in browsers.
@@ -24,17 +25,18 @@ export interface Config {
     readonly version?: string;
 }
 
-function parse_config(config?: Config): Required<Config> {
+export function parse_config(config?: Config): Required<Config>
+{
     let fetch = config?.fetch;
 
     if (!fetch) {
         if (typeof window === "undefined") {
             throw new Error("I can't find an implementation of fetch.");
         }
-        
+
         fetch = window.fetch;
     }
-    
+
     return {
         fetch,
         baseUrl: config?.baseUrl ?? "http://api.gamejolt.com/api/game",
@@ -47,8 +49,9 @@ function parse_config(config?: Config): Required<Config> {
  * @param private_key the unique secret private game key.
  * @param game_id the unique game id.
  * @param config optional configuration, see the config interface.
- * @returns 
+ * @returns
  */
-export function create(private_key: string, game_id: number, config?: Config) : GamejoltGameApi {
+export function create(private_key: string, game_id: number, config?: Config): GamejoltGameApi
+{
     return new GamejoltGameApi(private_key, game_id, parse_config(config));
 }

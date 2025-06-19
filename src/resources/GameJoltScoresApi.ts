@@ -42,6 +42,16 @@ export interface GamejoltScoresFetchParameters extends GamejoltScoresParameters
     limit?: number;
 
     /**
+     * The ID of the score table.
+     */
+    table_id?: string;
+
+    /**
+     * The guest's name.
+     */
+    guest?: string;
+
+    /**
      * Fetch only scores better than this score sort value.
      */
     better_than?: number;
@@ -66,7 +76,7 @@ export interface GamejoltScoresFetchResult extends GamejoltResponse
 /**
  * The score.
  */
-export interface GamejoltScore 
+export interface GamejoltScore
 {
     /**
      * 	The score string.
@@ -121,30 +131,30 @@ export interface GamejoltScore
  */
 export class GamejoltScoresApi extends GamejoltBaseApi
 {
-    protected get resource (): string
+    protected get resource(): string
     {
         return "scores";
     }
 
     /**
-    * Adds a score for a user or guest.
-    * 
-    * Remarks:
-    * You can either store a score for a user or a guest. If you're storing for a user, you must pass in the username and user_token parameters. If you're storing for a guest, you must pass in the guest parameter.
-    * The extra_data value is only retrievable through the API and your game's dashboard. It's never displayed publicly to users on the site. If there is other data associated with the score such as time played, coins collected, etc., you should definitely include it. It will be helpful in cases where you believe a gamer has illegitimately achieved a high score.
-    * If table_id is left blank, the score will be submitted to the primary high score table.
-    * 
-    * @param { GamejoltScoresAddParameters } parameters - the parameters.
-    * @returns { Promise<GamejoltResponse> }
-    */
-    public add (parameters: GamejoltScoresAddParameters): Promise<GamejoltResponse> 
+     * Adds a score for a user or guest.
+     *
+     * Remarks:
+     * You can either store a score for a user or a guest. If you're storing for a user, you must pass in the username and user_token parameters. If you're storing for a guest, you must pass in the guest parameter.
+     * The extra_data value is only retrievable through the API and your game's dashboard. It's never displayed publicly to users on the site. If there is other data associated with the score such as time played, coins collected, etc., you should definitely include it. It will be helpful in cases where you believe a gamer has illegitimately achieved a high score.
+     * If table_id is left blank, the score will be submitted to the primary high score table.
+     *
+     * @param { GamejoltScoresAddParameters } parameters - the parameters.
+     * @returns { Promise<GamejoltResponse> }
+     */
+    public add(parameters: GamejoltScoresAddParameters): Promise<GamejoltResponse>
     {
         return this.get<GamejoltResponse>("add", parameters);
     }
 
     /**
      * Returns a list of scores either for a user or globally for a game.
-     * 
+     *
      * Remarks:
      * The default value for limit is 10 scores. The maximum amount of scores you can retrieve is 100.
      * If table_id is left blank, the scores from the primary score table will be returned.
@@ -155,9 +165,8 @@ export class GamejoltScoresApi extends GamejoltBaseApi
      * @param { GamejoltScoresFetchParameters } parameters - the parameters
      * @returns { Promise<Array<GamejoltScoresFetchResult>> }
      */
-    public fetch(parameters: GamejoltScoresFetchParameters) : Promise<GamejoltScoresFetchResult>
+    public fetch(parameters: GamejoltScoresFetchParameters): Promise<GamejoltScoresFetchResult>
     {
         return this.get<GamejoltScoresFetchResult>("", parameters);
     }
-
 }
