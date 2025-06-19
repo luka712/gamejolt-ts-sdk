@@ -1,6 +1,12 @@
 # Changelog
 
+## [1.1.0] - 2025-06-19
+
+### Added
+- sdk can be now used from 'node' environment.
+
 ## [1.0.1] - 2025-06-19
+
 ### Changed
 - test of CI pipeline. No changes are present.
 
