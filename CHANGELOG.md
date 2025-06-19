@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.1] - 2025-06-19
+### Changed
+- test of CI pipeline. No changes are present.
+
 ## [1.0.0] - 2025-06-19
 
 ### Changed
