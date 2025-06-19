@@ -17,6 +17,8 @@ describe("utils", () => {
         const queryParams = {
             "foo bar": "bar",
             hello: "hello world",
+            x: undefined,
+            y: null,
         };
 
         expect(utilCreateQueryString(queryParams)).toEqual(

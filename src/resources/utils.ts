@@ -11,11 +11,11 @@ export function utilStrCompare(a: string, b: string): number
  * Converts a set of query parameters into a query string.
  * @param queryParams
  */
-export function utilCreateQueryString(queryParams: Record<string, string | number | undefined>): string
+export function utilCreateQueryString(queryParams: Record<string, string | number | undefined | null>): string
 {
     return Object.entries(queryParams)
         // Remove anything that is undefined
-        .filter(([, value]) => value !== undefined)
+        .filter(([, value]) => value !== undefined && value !== null)
         // Sort query parameters in order
         .sort((a, b) => utilStrCompare(a[0], b[0]))
         // Encode URI components
