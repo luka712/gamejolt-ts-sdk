@@ -34,7 +34,8 @@ export function parse_config(config?: Config): Required<Config>
             throw new Error("I can't find an implementation of fetch.");
         }
 
-        fetch = window.fetch;
+        // See: https://stackoverflow.com/questions/44720448/fetch-typeerror-failed-to-execute-fetch-on-window-illegal-invocation
+        fetch = (...args) => window.fetch(...args);
     }
 
     return {
