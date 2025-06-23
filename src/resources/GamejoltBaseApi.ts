@@ -1,4 +1,4 @@
-import CryptoJS from "crypto-js";
+import MD5 from "crypto-js/md5";
 import { Config } from "..";
 import { utilCreateQueryString, utilNullToUndefined } from "./utils";
 
@@ -108,7 +108,7 @@ export abstract class GamejoltBaseApi
 
         url += `?${queryStr}`;
 
-        const signature = CryptoJS.MD5(`${url}${this.m_privateKey}`).toString();
+        const signature = MD5(`${url}${this.m_privateKey}`).toString();
         url += `&signature=${signature}`;
 
         const response = await this.m_config.fetch(url);
